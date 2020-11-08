@@ -1,0 +1,39 @@
+const int FLAME_SENSOR_PIN = 8; 
+int FLAME_SENSOR_state=0;
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+void setup()
+{
+ lcd.begin(16,2);
+ Serial.begin(9600);
+ pinMode(FLAME_SENSOR_PIN, INPUT);
+ lcd.setCursor(0,0);
+ lcd.print("FLAME DETECTION");
+ lcd.setCursor(0,2);
+ lcd.print("LAB PNJ");
+ delay(500);
+}
+void loop() 
+{  
+ FLAME_SENSOR_state = digitalRead(FLAME_SENSOR_PIN);
+  
+ if(FLAME_SENSOR_state== HIGH)
+ { 
+  lcd.clear();     
+  int FLAME_SENSOR_serial_data=10;
+  Serial.write(FLAME_SENSOR_serial_data); 
+  lcd.setCursor(0,1);
+  lcd.print("FLAME DETECTED");
+  delay(1000);
+ } 
+  
+ else
+ {
+  lcd.clear();     
+  int FLAME_SENSOR_serial_data=20;
+  Serial.write(FLAME_SENSOR_serial_data); 
+  lcd.setCursor(0,1);
+  lcd.print("NO FLAME");
+  delay(1000);
+ }  
+}
